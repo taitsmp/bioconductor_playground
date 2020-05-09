@@ -1,0 +1,59 @@
+---
+title: "OSCA_bioconductor"
+author: "Tait Larson"
+date: "5/9/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## About 
+
+I'm working through examples and code from here:
+
+* https://osca.bioconductor.org/
+
+I'm using some of the (older) Notebooks from this site as examples of how to structure R Markdown docs.
+
+* http://jtleek.com/genstats_site/
+
+
+### Setup
+
+* https://osca.bioconductor.org/learning-r-and-more.html
+
+```{r install_packages, eval=FALSE}
+install.packages("BiocManager")
+BiocManager::install("SingleCellExperiment")
+BiocManager::install(c('scater', 'scran', 'uwot'))
+
+```
+
+```{r load}
+library(SingleCellExperiment)
+```
+
+### Setting up a Counts Matrix
+
+* https://osca.bioconductor.org/data-infrastructure.html#storing-primary-experimental-data
+
+```{r}
+counts_matrix <- data.frame(cell_1 = rpois(10,10),
+                           cell_2 = rpois(10,10),
+                           cell_3 = rpois(10,30))
+rownames(counts_matrix) <- paste0("gene_", 1:10)
+counts_matrix <- as.matrix(counts_matrix) # must be a matrix object!
+```
+
+### Laoding a Single Cell Experiment
+
+```{r}
+sce <- SingleCellExperiment(assays = list(counts = counts_matrix))
+```
+
+Left off here:
+
+* https://osca.bioconductor.org/data-infrastructure.html#filling-the-assays-slot
+
