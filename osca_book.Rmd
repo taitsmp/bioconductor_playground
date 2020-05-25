@@ -57,3 +57,44 @@ Left off here:
 
 * https://osca.bioconductor.org/data-infrastructure.html#filling-the-assays-slot
 
+```{r}
+sce <- SingleCellExperiment(list(counts = counts_matrix))
+assay(sce, "counts")
+```
+
+```{r}
+sce <- scater::logNormCounts(sce)
+assay(sce, "logcounts")
+```
+
+```{r}
+assays(sce)
+```
+
+### Adding a new Assay to an existing sce
+
+```{r}
+counts_100 <- counts(sce) + 100
+assay(sce, "counts_100") <- counts_100
+assays(sce)
+assay(sce, "counts_100")
+```
+
+Set the row names for a data frame
+
+```{r}
+cell_metadata <- data.frame(batch = c(1, 1, 2))
+rownames(cell_metadata) <- paste0("cell_", 1:3)
+```
+
+Start a new experiment with cell metadata in coldata. 
+
+```{r}
+sce2 <- SingleCellExperiment(assays = list(counts = counts_matrix),
+    colData = cell_metadata)
+```
+
+```{r}
+sce2 <- scater::addPerCellQC(sce2)
+```
+
